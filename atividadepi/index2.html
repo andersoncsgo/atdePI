@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar e Responder Mensagens</title>
+</head>
+<body>
+    <h1>Consultar e Responder Mensagens</h1>
+    <div id="messagesContainer"></div>
+
+    <script>
+        
+        function loadMessages() {
+            fetch('https://parseapi.back4app.com/classes/MyCustomClassName', {
+                headers: {
+                    'X-Parse-Application-Id': 'biww5i30srhkBIvmwMMti70h0dPBFCexOm6eBAxL',
+                    'X-Parse-REST-API-Key': 'FyRThxjdkxxCVqLW6Ti6wv0DTbFfnytigZi7TMyd'
+                }
+            })
+            .then(response => response.json())
+            .then(messages => {
+                var messagesContainer = document.getElementById("messagesContainer");
+                messages.results.forEach(function(message) {
+                    var messageDiv = document.createElement("div");
+                    messageDiv.innerHTML = "<strong>Nome:</strong> " + message.nome + "<br>" +
+                                           "<strong>E-mail:</strong> " + message.email + "<br>" +
+                                           "<strong>Assunto:</strong> " + message.assunto + "<br>" +
+                                           "<strong>Mensagem:</strong> " + message.mensagem + "<br><br>";
+                    messagesContainer.appendChild(messageDiv);
+                });
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+
+        
+        loadMessages();
+    </script>
+</body>
+</html>
